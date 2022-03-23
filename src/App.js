@@ -1,10 +1,24 @@
-import React from 'react';
+import React,{useEffect , useState} from 'react';
 import { CssBaseline,Grid } from '@material-ui/core';
-
 import Header from './Components/Header/Header';
 import List from './Components/List/List'
-import Maps from './Components/Maps/Map'
+import Map from './Components/Maps/Map'
+import { getPlacesdata } from './Api/index';
 function App() {
+  
+  const [places, setplaces] = useState([])
+  const [coordinates, setcoordinates] = useState({ lat:29.6857,lng:76.9905})
+  const [bonds, setbonds] = useState(null)
+  useEffect(() => {
+    console.log(coordinates,bonds)
+    getPlacesdata()
+    .then((data)=>{
+      setplaces(data)
+      // console.log("hellooncksksks");
+      // console.log({data});
+    })
+  }, [coordinates,bonds])
+  
   return(
     <>
         <CssBaseline/>
@@ -14,7 +28,11 @@ function App() {
             <List/>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Maps/>
+            <Map
+            coordinates={coordinates}
+            setbonds={setbonds}
+            setcoordinates={setcoordinates}
+            />
           </Grid>
         </Grid>
     </>
