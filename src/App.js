@@ -7,15 +7,23 @@ import { getPlacesdata } from './Api/index';
 function App() {
   
   const [places, setplaces] = useState([])
-  const [coordinates, setcoordinates] = useState({ lat:29.6857,lng:76.9905})
+  const [coordinates, setcoordinates] = useState({ lat:0,lng:0})
   const [bonds, setbonds] = useState(null)
+
   useEffect(() => {
-    console.log(coordinates,bonds)
-    getPlacesdata()
+    navigator.geolocation.getCurrentPosition(({coords : {latitude,longitude}})=>{
+        setcoordinates({lat:latitude , lng:longitude})
+        // console.log( latitude , "I am in ", longitude)
+    })
+  }, []);
+  
+
+  useEffect(() => {
+    // console.log(coordinates,bonds)
+    getPlacesdata(bonds.sw,bonds.ne)
     .then((data)=>{
+      console.log(data);
       setplaces(data)
-      // console.log("hellooncksksks");
-      // console.log({data});
     })
   }, [coordinates,bonds])
   
@@ -25,7 +33,7 @@ function App() {
         <Header/>
         <Grid container spacing={3} style={{width : '100%'}}>
           <Grid item xs={12} md={4}>
-            <List/>
+            <List places={places}/>
           </Grid>
           <Grid item xs={12} md={8}>
             <Map
