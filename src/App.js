@@ -7,8 +7,8 @@ import { getPlacesdata } from './Api/index';
 function App() {
   
   const [places, setplaces] = useState([])
-  const [coordinates, setcoordinates] = useState({ lat:0,lng:0})
-  const [bonds, setbonds] = useState(null)
+  const [coordinates, setcoordinates] = useState({})
+  const [bonds, setbonds] = useState({})
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({coords : {latitude,longitude}})=>{

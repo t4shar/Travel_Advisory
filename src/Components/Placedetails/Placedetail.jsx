@@ -1,10 +1,10 @@
 import React from 'react';
 
-const placedetail = ()=>{
+const Placedetail = ({place})=>{
     return (
-        <div><h1>placedetail</h1></div>
+        <div><h1>{place.name}</h1></div>
     );
 
 }
 
-export default placedetail;
+export default Placedetail;
