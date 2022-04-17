@@ -40,6 +40,7 @@ function App() {
             coordinates={coordinates}
             setbonds={setbonds}
             setcoordinates={setcoordinates}
+            places={places}
             />
           </Grid>
         </Grid>
