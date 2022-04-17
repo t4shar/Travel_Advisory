@@ -26,7 +26,7 @@ const Map = (props)=>{
                 onChange={(e)=>{
                     // console.log( "Hssllls",props.props.coordinates);
                     // console.log("I am now in e target")
-                    console.log(e); 
+                    // console.log(e); 
                     
                     props.setcoordinates({ lat: e.center.lat , lng: e.center.lng})
                     props.setbonds({ ne : e.marginBounds.ne , sw : e.marginBounds.sw})
