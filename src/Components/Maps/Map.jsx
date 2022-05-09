@@ -1,40 +1,53 @@
-import React from 'react';
-import GoogleMapReact from 'google-map-react'
-import { Paper, Typography, useMediaQuery } from '@material-ui/core';
-import { LocationOnOutlinedIcon } from '@material-ui/icons/LocalActivityOutlined';
-import Rating from '@material-ui/lab';
+import React from "react";
+import GoogleMapReact from "google-map-react";
+import { Paper, Typography, useMediaQuery } from "@material-ui/core";
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import Rating from "@material-ui/lab/Rating";
 
-import useStyles from './style';
+import useStyles from "./style";
 
-const Map = (props)=>{
-    
-    const classes = useStyles();
-    const isMobile = useMediaQuery('(min-width : 600px)');
-    // console.log( F);
-    // const props.coordinates  = { lat:29.6857,lng:76.9905}
-    // const {props.coordinates,setbonds , setcoordinate} = props
-    return (
-        
-        <div className={classes.mapContainer}>
-            <GoogleMapReact 
-                bootstrapURLKeys={{ key: 'AIzaSyB6POaB5bEGttOTc7k-HdgCwyA26YIbqlc'}}
-                theme={'dark'}
-                defaultCenter={props.coordinates}
-                center={props.coordinates}
-                defaultZoom={14}
-                margin={[50 ,50 ,50 ,50]}
-                onChange={(e)=>{
-                    // console.log( "Hssllls",props.props.coordinates);
-                    // console.log("I am now in e target")
-                    // console.log(e); 
-                    
-                    props.setcoordinates({ lat: e.center.lat , lng: e.center.lng})
-                    props.setbonds({ ne : e.marginBounds.ne , sw : e.marginBounds.sw})
-                }}
-                ></GoogleMapReact>
-        </div>
-    );
-    
-}
+const Map = ({ setcoordinates, setbonds, coordinates, places , setchild }) => {
+  const classes = useStyles();
+  const isDesktop = useMediaQuery("(min-width : 600px)");
+  return (
+    <div className={classes.mapContainer}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: "AIzaSyB6POaB5bEGttOTc7k-HdgCwyA26YIbqlc" }}
+        theme={"dark"}
+        defaultCenter={coordinates}
+        center={coordinates}
+        defaultZoom={14}
+        margin={[50, 50, 50, 50]}
+        onChange={(e) => {
+          setcoordinates({ lat: e.center.lat, lng: e.center.lng });
+          setbonds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+        }}
+        onChildClick={(child)=>{setchild(child)}}
+      >
+         {places.length && places.map((place, i) => (
+          <div
+            className={classes.markerContainer}
+            lat={Number(place.latitude)}
+            lng={Number(place.longitude)}
+            key={i}
+          >
+            {!isDesktop
+              ? <LocationOnOutlinedIcon color="primary" fontSize="large" />
+              : (
+                <Paper elevation={3} className={classes.paper}>
+                  <Typography className={classes.typography} variant="subtitle2" gutterBottom> {place.name}</Typography>
+                  <img
+                    className={classes.pointer}
+                    src={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
+                  />
+                  <Rating name="read-only" size="small" value={Number(place.rating)} readOnly />
+                </Paper>
+              )}
+          </div>
+        ))}
+      </GoogleMapReact>
+    </div>
+  );
+};
 
-export default Map
+export default Map;
