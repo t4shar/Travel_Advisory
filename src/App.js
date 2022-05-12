@@ -6,10 +6,14 @@ import Map from './Components/Maps/Map'
 import { getPlacesdata } from './Api/index';
 function App() {
   
+  const [type, settype] = useState('restaurants');
+  const [rating, setrating] = useState('');
+
   const [places, setplaces] = useState([])
   const [coordinates, setcoordinates] = useState({})
   const [bonds, setbonds] = useState({})
   const [child, setchild] = useState(null)
+  const [loding, setloding] = useState(false);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({coords : {latitude,longitude}})=>{
@@ -20,13 +24,14 @@ function App() {
   
 
   useEffect(() => {
-    // console.log(coordinates,bonds)
-    getPlacesdata(bonds.sw,bonds.ne)
+    setloding(true);
+    getPlacesdata(type,bonds.sw,bonds.ne)
     .then((data)=>{
       console.log(data);
       setplaces(data)
+      setloding(false); 
     })
-  }, [coordinates,bonds])
+  }, [type,coordinates,bonds])
   
   return(
     <>
@@ -34,7 +39,13 @@ function App() {
         <Header/>
         <Grid container spacing={3} style={{width : '100%'}}>
           <Grid item xs={12} md={4}>
-            <List places={places} child={child} />
+            <List places={places} child={child} loding={loding} 
+            type={type}
+            settype={settype}
+            
+            rating={rating}
+            setrating={setrating}
+            />
           </Grid>
           <Grid item xs={12} md={8}>
             <Map

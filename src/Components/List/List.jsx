@@ -3,22 +3,26 @@ import { CircularProgress,Grid,Typography , InputLabel , MenuItem , FormControl 
 import useStyles from './style'
 import Placedetail from '../Placedetails/Placedetail'
 
-const List = ({places , child})=>{
+const List = ({places , child , loding , type , rating , settype ,setrating})=>{
     const classes = useStyles();
-    const [type, settype] = useState('restaurants');
-    const [rating, setrating] = useState('restaurants');
     
     console.log({child})
 
     return (
         <div className={classes.container}>
             <Typography variant='h4'>Restaurants,Hotels & Monuments</Typography>
-            <FormControl className={classes.formControl}>
+            {loding ? (
+                <div className={classes.loading}>
+                    <CircularProgress size="5rem"/>
+                </div>
+            ):(
+                <>
+                <FormControl className={classes.formControl}>
                 <InputLabel>Type</InputLabel>
                 <Select value={type} onChange={(e)=>settype(e.target.value)} >
                     <MenuItem value="restaurants" >Restaurnats</MenuItem>
-                    <MenuItem value="Hotels" >Hotels</MenuItem>
-                    <MenuItem value="Monuments" >Monuments</MenuItem>
+                    <MenuItem value="hotels" >Hotels</MenuItem>
+                    <MenuItem value="attractions" >Monuments</MenuItem>
                 </Select>
                  </FormControl>
             <FormControl className={classes.formControl}>
@@ -38,8 +42,10 @@ const List = ({places , child})=>{
                         </Grid>
                     ))}
                  </Grid> 
+        </>
+        )}
         </div>
-    );
+        );
 
 }
 
