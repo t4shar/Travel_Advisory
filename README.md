@@ -1,4 +1,10 @@
-# Getting Started with Create React App
+## Home Page
+![image](https://user-images.githubusercontent.com/77160879/180497570-ffff11e5-d33a-45a6-9849-c03adcda0b1e.png)
+## map component
+![image](https://user-images.githubusercontent.com/77160879/180497619-8e5ccf2d-5a2f-4441-8d8e-96d09e5d25ae.png)
+## place detail
+![image](https://user-images.githubusercontent.com/77160879/180497724-7e602f93-d2ba-47ec-9af5-36e1f5e2298c.png)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
